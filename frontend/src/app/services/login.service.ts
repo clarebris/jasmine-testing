@@ -1,0 +1,32 @@
+import { Injectable } from '@angular/core';
+import { loginUser } from '../interfaces/login';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+
+  constructor() { }
+
+  async login(userLogins: loginUser){
+    let response = await fetch('http://localhost:8900/user/login', {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(userLogins)
+    })
+
+    const data = await response.json()
+    console.log(response)
+
+    let token = data.token
+
+    localStorage.setItem('token', token)
+    // console.log(token.username);
+    console.log(data);
+
+    return data
+
+  }
+}
